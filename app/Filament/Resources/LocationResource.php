@@ -76,7 +76,7 @@ class LocationResource extends Resource
 
     public static function canCreate(): bool
     {
-        return true;
+        return false;
     }
 
 
