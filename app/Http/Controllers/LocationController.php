@@ -52,9 +52,14 @@ class LocationController extends Controller
 
     public function showMapPage()
     {
-        
+
         $properties = Property::where('user_id', Auth::id())->get();
         return view('filament.pages.custom-map-builder', compact('properties'));
     }
-}
 
+
+    public function showLocationPage()
+    {
+        return view('filament.pages.locations');
+    }
+}

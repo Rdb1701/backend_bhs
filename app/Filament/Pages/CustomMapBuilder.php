@@ -14,6 +14,11 @@ class CustomMapBuilder extends Page
     protected static ?string $title = 'Custom Map Builder';
     protected static ?int $navigationSort = 1;
 
+    public static function canAccess(): bool
+    {
+        return Auth::user()->role === 'owner';
+    }
+
     public $properties = [];
 
     public static function getNavigationGroup(): ?string

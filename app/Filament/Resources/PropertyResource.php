@@ -22,6 +22,11 @@ class PropertyResource extends Resource
 
     protected static ?string $navigationGroup = 'Property Management';
 
+    public static function canViewAny(): bool
+    {
+        return Auth::user()->role === 'owner';
+    }
+
     public static function form(Form $form): Form
     {
         return $form
