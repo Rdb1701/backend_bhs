@@ -24,7 +24,9 @@ class User extends Authenticatable
         'password',
         'profile_picture',
         'role',
-        'isActive'
+        'isActive',
+        'payment_intent_id',
+        'payment_status'
     ];
 
     /**

@@ -1,20 +1,20 @@
-<x-filament::page>
+<x-filament-widgets::widget>
     <x-filament::section>
-        <div id="map" style="height: 700px; width: 100%; border: 1px solid #ccc;"></div>
+        <div id="map" style="height: 500px; width: 100%; border: 1px solid #ccc;"></div>
 
         <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
         <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet">
 
         <script>
             document.addEventListener('DOMContentLoaded', () => {
-                const token = '{{ env('MAPBOX_API_KEY') }}'; 
+                const token = '{{ env('MAPBOX_API_KEY') }}';
                 mapboxgl.accessToken = token;
                 
                 try {
                     const map = new mapboxgl.Map({
                         container: 'map',
                         style: 'mapbox://styles/mapbox/streets-v11',
-                        center: [125.6, 8.5], 
+                        center: [125.6, 8.5],
                         zoom: 5
                     });
 
@@ -47,4 +47,4 @@
             });
         </script>
     </x-filament::section>
-</x-filament::page>
+</x-filament-widgets::widget>

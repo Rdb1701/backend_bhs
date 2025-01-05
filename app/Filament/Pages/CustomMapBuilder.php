@@ -16,7 +16,7 @@ class CustomMapBuilder extends Page
 
     public static function canAccess(): bool
     {
-        return Auth::user()->role === 'owner';
+        return Auth::user()->role === 'owner' && Auth::user()->isActive === 'active';
     }
 
     public $properties = [];

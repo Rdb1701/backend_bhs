@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\LocationResource\Pages;
-use App\Filament\Resources\LocationResource\RelationManagers;
-use App\Models\Location;
+use App\Filament\Resources\ReviewResource\Pages;
+use App\Filament\Resources\ReviewResource\RelationManagers;
+use App\Models\Review;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -14,15 +14,14 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 
-class LocationResource extends Resource
+class ReviewResource extends Resource
 {
-    protected static ?string $model = Location::class;
+    protected static ?string $model = Review::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-map-pin';
+    protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-list';
+    protected static ?string $navigationGroup = 'Review Management';
 
-    protected static ?string $navigationGroup = 'Custom Tools';
-
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = 7;
 
     public static function canViewAny(): bool
     {
@@ -42,18 +41,18 @@ class LocationResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('property.name')
+                ->searchable(),
+                Tables\Columns\TextColumn::make('rating')
                 ->searchable()
-                ->sortable(),
-                Tables\Columns\TextColumn::make('latitude')
-                ->searchable(),
-                Tables\Columns\TextColumn::make('longitude')
-                ->searchable(),
+                ->formatStateUsing(fn($state) => $state . " stars"),
+                Tables\Columns\TextColumn::make('comment'),
+                
             ])
             ->filters([
                 //
             ])
             ->actions([
-               // Tables\Actions\EditAction::make(),
+              //  Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
@@ -73,9 +72,9 @@ class LocationResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListLocations::route('/'),
-            'create' => Pages\CreateLocation::route('/create'),
-            'edit' => Pages\EditLocation::route('/{record}/edit'),
+            'index' => Pages\ListReviews::route('/'),
+            'create' => Pages\CreateReview::route('/create'),
+            'edit' => Pages\EditReview::route('/{record}/edit'),
         ];
     }
 
@@ -83,8 +82,6 @@ class LocationResource extends Resource
     {
         return false;
     }
-
-
 
     public static function getEloquentQuery(): Builder
     {

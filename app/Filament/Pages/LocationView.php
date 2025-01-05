@@ -1,11 +1,12 @@
 <?php
+
 namespace App\Filament\Pages;
 
 use App\Models\Location;
 use Filament\Pages\Page;
 use Illuminate\Support\Facades\Auth;
 
-class LocationView extends Page 
+class LocationView extends Page
 {
     protected static ?string $navigationIcon = 'heroicon-o-map-pin';
     protected static string $view = 'filament.pages.location-view';
@@ -13,34 +14,37 @@ class LocationView extends Page
     protected static ?string $title = 'Boarding House Locations';
     
     public $locations = [];
-    
+
     public static function canAccess(): bool
     {
         return Auth::user()->role === 'admin';
     }
-    
+
     public static function getNavigationGroup(): ?string
     {
-        return 'Custom Tools';
+        return 'Locations';
     }
 
     public function mount()
     {
+        // Fetch locations and format them for the map
         $this->locations = Location::with('property')->get()->map(function ($location) {
             return [
-                'type' => 'Feature',
-                'geometry' => [
-                    'type' => 'Point',
-                    'coordinates' => [$location->longitude, $location->latitude]
-                ],
-                'properties' => [
-                    'id' => $location->property->id,
+                'longitude' => $location->longitude,
+                'latitude' => $location->latitude,
+                'property' => [
                     'name' => $location->property->name,
-                    'address' => $location->property->address,
                     'price' => $location->property->price,
-                    'location_name' => $location->location_name,
+                    'status' => $location->property->availability_status,
+                    'room_type' => $location->property->room_type,
                 ]
             ];
-        })->values()->toArray();
+        })->toArray();
+    }
+
+    // You can also create a helper method to get the locations if needed
+    public function getLocations()
+    {
+        return $this->locations;
     }
 }

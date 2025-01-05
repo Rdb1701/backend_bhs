@@ -21,4 +21,13 @@ class Location extends Model
     {
         return $this->belongsTo(Property::class);
     }
+
+     // Accessor for easier coordinate access
+     public function getCoordinatesAttribute()
+     {
+         return [
+             'latitude' => $this->latitude,
+             'longitude' => $this->longitude
+         ];
+     }
 }

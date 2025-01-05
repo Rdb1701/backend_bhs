@@ -27,7 +27,7 @@ class ReservationResource extends Resource
 
     public static function canViewAny(): bool
     {
-        return Auth::user()->role === 'owner';
+        return Auth::user()->role === 'owner' && Auth::user()->isActive === 'active';
     }
 
     public static function form(Form $form): Form
